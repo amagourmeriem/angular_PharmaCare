@@ -7,10 +7,10 @@ import { AppListsComponent } from './lists/lists.component';
 import { AppMenuComponent } from './menu/menu.component';
 import { AppTooltipsComponent } from './tooltips/tooltips.component';
 import { AppFormsComponent } from './forms/forms.component';
-import { AppTablesComponent } from './tables/tables.component';
 import { PatientsListComponent } from './patients-list/patients-list.component'; // Import du nouveau composant
 import { PrescriptionsComponent } from './prescriptions/prescriptions.component';
 import { MedicationComponent } from './medications/medications.component';
+import { ProfileComponent } from './profile/profile.component';
 
 export const UiComponentsRoutes: Routes = [
   {
@@ -41,10 +41,6 @@ export const UiComponentsRoutes: Routes = [
         component: AppFormsComponent,
       },
       {
-        path: 'tables',
-        component: AppTablesComponent,
-      },
-      {
         path: 'patients-list', // Nouvelle route
         component: PatientsListComponent, // Lien vers le composant PatientsList
       },
@@ -55,6 +51,10 @@ export const UiComponentsRoutes: Routes = [
       {
         path: 'medications',
         component: MedicationComponent, // Lien vers le composant Medications
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent, // Lien vers le composant Medications
       },
     ],
   },

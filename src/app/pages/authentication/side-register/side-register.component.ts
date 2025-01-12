@@ -19,7 +19,7 @@ export class AppSideRegisterComponent {
   constructor(private router: Router) {}
 
   form = new FormGroup({
-    uname: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    emailOrCode: new FormControl('', [Validators.required, Validators.minLength(6)]),
     email: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
   });

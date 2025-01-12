@@ -7,7 +7,7 @@ import { MaterialModule } from 'src/app/material.module';
 export interface productsData {
   id: number;
   imagePath: string;
-  uname: string;
+  emailOrCode: string;
   position: string;
   hrate: number;
   skills: string;
@@ -19,7 +19,7 @@ const ELEMENT_DATA: productsData[] = [
   {
     id: 1,
     imagePath: 'assets/images/profile/user-1.jpg',
-    uname: 'Mark J. Freeman',
+    emailOrCode: 'Mark J. Freeman',
     position: 'Developer',
     skills: 'HTML',
     hrate: 80,
@@ -29,7 +29,7 @@ const ELEMENT_DATA: productsData[] = [
   {
     id: 2,
     imagePath: 'assets/images/profile/user-2.jpg',
-    uname: 'Nina R. Oldman',
+    emailOrCode: 'Nina R. Oldman',
     position: 'Designer',
     skills: 'JavaScript',
     hrate: 70,
@@ -39,7 +39,7 @@ const ELEMENT_DATA: productsData[] = [
   {
     id: 3,
     imagePath: 'assets/images/profile/user-3.jpg',
-    uname: 'Arya H. Shah',
+    emailOrCode: 'Arya H. Shah',
     position: 'Developer',
     skills: 'React',
     hrate: 40,
@@ -49,7 +49,7 @@ const ELEMENT_DATA: productsData[] = [
   {
     id: 4,
     imagePath: 'assets/images/profile/user-4.jpg',
-    uname: 'June R. Smith',
+    emailOrCode: 'June R. Smith',
     position: 'Designer',
     skills: 'Vuejs',
     hrate: 20,
