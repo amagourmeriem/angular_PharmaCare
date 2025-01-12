@@ -1,8 +1,8 @@
-// auth.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthResponse } from './auth-response.model';
+import { Router } from '@angular/router';  // Importer le Router
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +10,7 @@ import { AuthResponse } from './auth-response.model';
 export class AuthService {
   private apiUrl = 'http://localhost:8081/auth';  // URL de votre backend
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}  // Injection du Router
 
   login(emailOrCode: string, password: string): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/login`, { 
@@ -19,6 +19,11 @@ export class AuthService {
     });
   }
 
+  isAuthenticated(): boolean {
+    const token = localStorage.getItem('authToken');
+    return !!token; // Retourne vrai si un token existe
+  }
+  
   saveToken(token: string) {
     localStorage.setItem('authToken', token);
   }
@@ -29,5 +34,9 @@ export class AuthService {
 
   removeToken() {
     localStorage.removeItem('authToken');
+  }
+
+  logout() {
+    localStorage.removeItem('authToken'); // Supprime le token lors du logout
   }
 }
