@@ -1,0 +1,39 @@
+.prescriptions-container {
+    .actions {
+      text-align: right;
+      margin-bottom: 16px;
+    }
+  
+    .content {
+      display: flex;
+      gap: 16px;
+    }
+  
+    .prescription-list {
+      flex: 1;
+      max-width: 40%;
+    }
+  
+    .prescription-details {
+      flex: 2;
+    }
+  
+    .list-card {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+  
+    .details-card {
+      padding: 16px;
+    }
+  
+    .prescription-item {
+      cursor: pointer;
+      transition: background-color 0.2s;
+  
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.04);
+      }
+    }
+  }
+  

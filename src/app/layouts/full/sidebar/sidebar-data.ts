@@ -11,7 +11,25 @@ export const navItems: NavItem[] = [
     route: '/dashboard',
   },
   {
-    navCap: 'Ui Components',
+    navCap: 'Healthcare',
+  },
+  {
+    displayName: 'Patients',
+    iconName: 'person',
+    bgcolor: 'primary',
+    route: '/ui-components/patients-list',
+  },
+  {
+    displayName: 'Prescriptions',
+    iconName: 'note-add',
+    bgcolor: 'accent',
+    route: '/ui-components/prescriptions',
+  },
+  {
+    displayName: 'Pharmacy',
+    iconName: 'pharmacy',
+    bgcolor: 'success',
+    route: '/ui-components/medications',
   },
   {
     displayName: 'Badge',
@@ -19,6 +37,16 @@ export const navItems: NavItem[] = [
     bgcolor: 'accent',
     route: '/ui-components/badge',
   },
+  {
+    displayName: 'Dashboard',
+    iconName: 'layout-dashboard',
+    bgcolor: 'primary',
+    route: '/dashboard',
+  },
+  {
+    navCap: 'Ui Components',
+  },
+ 
   {
     displayName: 'Chips',
     iconName: 'poker-chip',
