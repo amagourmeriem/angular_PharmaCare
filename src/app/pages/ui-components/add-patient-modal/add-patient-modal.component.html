@@ -1,0 +1,40 @@
+<form [formGroup]="addPatientForm" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="fill">
+    <mat-label>Nom</mat-label>
+    <input matInput formControlName="nom" />
+    <mat-error *ngIf="addPatientForm.get('nom')?.invalid && addPatientForm.get('nom')?.touched">
+      Le nom est requis.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Prénom</mat-label>
+    <input matInput formControlName="prenom" />
+    <mat-error *ngIf="addPatientForm.get('prenom')?.invalid && addPatientForm.get('prenom')?.touched">
+      Le prénom est requis.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Téléphone</mat-label>
+    <input matInput formControlName="tel" />
+    <mat-error *ngIf="addPatientForm.get('tel')?.invalid && addPatientForm.get('tel')?.touched">
+      Un numéro de téléphone valide est requis.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>CIN</mat-label>
+    <input matInput formControlName="cin" />
+    <mat-error *ngIf="addPatientForm.get('cin')?.invalid && addPatientForm.get('cin')?.touched">
+      Le CIN est requis.
+    </mat-error>
+  </mat-form-field>
+
+  <div mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="onCancel()">Annuler</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="addPatientForm.invalid">
+      Ajouter
+    </button>
+  </div>
+</form>

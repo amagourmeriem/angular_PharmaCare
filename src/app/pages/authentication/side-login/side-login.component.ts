@@ -10,6 +10,7 @@ import { Router, RouterModule } from '@angular/router';
 import { MaterialModule } from '../../../material.module';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-side-login',
@@ -20,9 +21,11 @@ import { AuthService } from 'src/app/services/auth/auth.service';
     FormsModule,
     ReactiveFormsModule,
     MatButtonModule,
+    CommonModule
   ],
   templateUrl: './side-login.component.html',
 })
+
 export class AppSideLoginComponent {
   constructor(private router: Router, private authService: AuthService) { }
 
@@ -53,7 +56,7 @@ export class AppSideLoginComponent {
     this.authService.login(emailOrCode, password).subscribe(
       (response) => {
         // Si la connexion est réussie, stocker le token et rediriger
-        const token = response.token;
+        const token = response.jwt;
         this.authService.saveToken(token);  // Sauvegarder le token
         console.log('Login successful');
         this.router.navigate(['/dashboard']);  // Redirection vers une page après connexion

@@ -1,43 +1,66 @@
-import { Component } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
-import { TablerIconsModule } from 'angular-tabler-icons';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { Patient, PatientService } from 'src/app/services/patients.service';
+import { AddPatientModalComponent } from '../add-patient-modal/add-patient-modal.component';
 
 @Component({
   selector: 'app-patients-list',
   standalone: true,
-  imports: [MatCardModule, MatMenuModule, MatIconModule, TablerIconsModule, MatButtonModule],
+  imports: [
+    MatCard,
+    MatCardHeader,
+    MatCardTitle,
+    MatCardContent,
+    HttpClientModule,
+    MatTableModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatDialogModule
+  ],
   templateUrl: './patients-list.component.html',
   styleUrls: ['./patients-list.component.scss'],
 })
-export class PatientsListComponent {
-  // Colonnes affichées dans le tableau
-  displayedColumns: string[] = ['nomPrenom', 'telephone', 'codePatient', 'cin'];
+export class PatientsListComponent implements OnInit {
+  displayedColumns: string[] = ['fullName', 'tel', 'codePatient', 'cin'];
+  patients: any[] = []; // List of patients
 
-  // Données fictives pour le tableau
-  patients = [
-    {
-      nom: 'El Mansouri',
-      prenom: 'Ahmed',
-      telephone: '0661122334',
-      codePatient: 'P001',
-      cin: 'AB123456',
-    },
-    {
-      nom: 'Benslimane',
-      prenom: 'Fatima',
-      telephone: '0665566778',
-      codePatient: 'P002',
-      cin: 'CD789012',
-    },
-    {
-      nom: 'Lamrani',
-      prenom: 'Youssef',
-      telephone: '0669988776',
-      codePatient: 'P003',
-      cin: 'EF345678',
-    },
-  ];
+  constructor(private patientService: PatientService, private dialog: MatDialog) {}
+
+  ngOnInit(): void {
+    this.loadPatients();
+  }
+
+  // Method to load patients
+  private loadPatients(): void {
+    this.patientService.getPatients().subscribe({
+      next: (data: Patient[]) => {
+        this.patients = data;
+      },
+      error: (err: any) => {
+        console.error('Erreur lors de la récupération des patients :', err);
+      },
+    });
+  }
+
+  openAddPatientModal(): void {
+    const dialogRef = this.dialog.open(AddPatientModalComponent, {
+      width: '1000px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // Ajouter le nouveau patient dans la liste
+        this.patients.push(result);
+      }
+    });
+  }
+  
+ // Cette méthode sera appelée lorsque le patient est ajouté
+ onPatientAdded(): void {
+  this.loadPatients(); // Actualiser la liste des patients
+}
 }
