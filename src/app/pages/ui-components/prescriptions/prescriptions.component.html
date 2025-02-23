@@ -1,24 +1,42 @@
-<div class="container">
+<mat-card>
   <h2>Liste des Ordonnances</h2>
 
-  <!-- ✅ Tableau des ordonnances -->
-  <table>
-    <thead>
-      <tr>
-        <th>Patient</th>
-        <th>Description</th>
-        <th>Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let ordonnance of ordonnances">
-        <td>{{ ordonnance.patient.nom }}</td>
-        <td>{{ ordonnance.description }}</td>
-        <td>{{ ordonnance.date | date:'dd/MM/yyyy' }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <table mat-table [dataSource]="ordonnances" class="mat-elevation-z8">
 
+    <!-- Code Patient -->
+    <ng-container matColumnDef="codePatient">
+      <th mat-header-cell *matHeaderCellDef> Code Patient </th>
+      <td mat-cell *matCellDef="let ordonnance"> {{ ordonnance.codePatient }} </td>
+    </ng-container>
+
+    <!-- Description -->
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef> Description </th>
+      <td mat-cell *matCellDef="let ordonnance"> {{ ordonnance.description }} </td>
+    </ng-container>
+
+    <!-- Médicaments -->
+    <ng-container matColumnDef="medicaments">
+      <th mat-header-cell *matHeaderCellDef> Médicaments </th>
+      <td mat-cell *matCellDef="let ordonnance">
+        <ul>
+          <li *ngFor="let med of ordonnance.medicaments">
+            {{ med.medicamentName }} - {{ med.posologie }} - {{ med.frequence }}
+          </li>
+        </ul>
+      </td>
+    </ng-container>
+
+    <!-- Date de création -->
+    <ng-container matColumnDef="createdAt">
+      <th mat-header-cell *matHeaderCellDef> Créé le </th>
+      <td mat-cell *matCellDef="let ordonnance"> {{ ordonnance.createdAt }} </td>
+    </ng-container>
+
+    <!-- En-têtes et lignes -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
   <!-- ✅ Bouton pour ajouter une nouvelle ordonnance -->
-  <button (click)="openAddPrescriptionDialog()">Créer une ordonnance</button>
-</div>
+  <button mat-raised-button color="primary" (click)="openAddPrescriptionDialog()">Créer une ordonnance</button>
+</mat-card>

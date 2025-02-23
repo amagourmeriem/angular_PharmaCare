@@ -1,49 +1,83 @@
 <mat-card>
-    <form [formGroup]="addPrescriptionForm" (ngSubmit)="submitPrescription()">
-      <!-- Sélection du patient -->
-      <mat-form-field>
-        <mat-label>Choisir un patient</mat-label>
-        <mat-select formControlName="codePatient">
-          <mat-option *ngFor="let patient of patients" [value]="patient.codePatient">
-            {{ patient.nom }} {{ patient.prenom }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+  <form [formGroup]="addPrescriptionForm" (ngSubmit)="submitPrescription()">
+    <!-- Patient -->
+    <mat-form-field appearance="fill">
+      <mat-label>Patient</mat-label>
+      <mat-select formControlName="codePatient">
+        <mat-option *ngFor="let patient of patients" [value]="patient.codePatient">
+          {{ patient.nom }} {{ patient.prenom }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="addPrescriptionForm.get('codePatient')?.invalid && addPrescriptionForm.get('codePatient')?.touched">
+        Veuillez sélectionner un patient.
+      </mat-error>
+    </mat-form-field>
   
-      <!-- Description -->
-      <mat-form-field>
-        <mat-label>Description</mat-label>
-        <input matInput formControlName="description" required />
-      </mat-form-field>
+    <!-- ✅ Nom de l'ordonnance -->
+    <mat-form-field appearance="fill">
+      <mat-label>Nom</mat-label>
+      <input matInput formControlName="nom" />
+      <mat-error *ngIf="addPrescriptionForm.get('nom')?.invalid && addPrescriptionForm.get('nom')?.touched">
+        Le nom est requis.
+      </mat-error>
+    </mat-form-field>
   
-      <!-- Liste des médicaments -->
-      <div formArrayName="ordonnanceMedicament">
-        <div *ngFor="let medicamentCtrl of ordonnanceMedicament.controls; let i = index;" [formGroupName]="i">
-          <mat-form-field>
-            <mat-label>Choisir un médicament</mat-label>
-            <mat-select formControlName="medicamentId">
-              <mat-option *ngFor="let medicament of medicaments" [value]="medicament.id">
-                {{ medicament.nom }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+    <!-- Description -->
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <input matInput formControlName="description" />
+      <mat-error *ngIf="addPrescriptionForm.get('description')?.invalid && addPrescriptionForm.get('description')?.touched">
+        La description est requise.
+      </mat-error>
+    </mat-form-field>
   
-          <mat-form-field>
-            <mat-label>Posologie</mat-label>
-            <input matInput formControlName="posologie" required />
-          </mat-form-field>
+    <!-- Médicaments -->
+    <div formArrayName="ordonnanceMedicament">
+      <div *ngFor="let med of ordonnanceMedicament.controls; let i = index" [formGroupName]="i">
+        <mat-form-field appearance="fill">
+          <mat-label>Médicament</mat-label>
+          <mat-select formControlName="medicamentId">
+            <mat-option *ngFor="let medicament of medicaments" [value]="medicament.id">
+              {{ medicament.nom }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
   
-          <mat-form-field>
-            <mat-label>Fréquence</mat-label>
-            <input matInput formControlName="frequence" required />
-          </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Posologie</mat-label>
+          <input matInput formControlName="posologie" />
+        </mat-form-field>
   
-          <button mat-button color="warn" (click)="removeMedicament(i)">Supprimer</button>
-        </div>
+        <mat-form-field appearance="fill">
+          <mat-label>Fréquence</mat-label>
+          <input matInput formControlName="frequence" />
+        </mat-form-field>
+  
+        <!-- ✅ Rappel -->
+        <mat-form-field appearance="fill">
+          <mat-label>Message de rappel</mat-label>
+          <input matInput formControlName="message" />
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill">
+          <mat-label>Date de rappel</mat-label>
+          <input matInput type="datetime-local" formControlName="dateRappel" />
+        </mat-form-field>
+  
+        <button mat-button color="warn" (click)="removeMedicament(i)">Supprimer</button>
       </div>
+    </div>
   
-      <button mat-button color="primary" (click)="addMedicament()">Ajouter un médicament</button>
-      <button mat-raised-button color="accent" type="submit" [disabled]="addPrescriptionForm.invalid">Enregistrer</button>
-    </form>
+    <button mat-button type="button" (click)="addMedicament()">+ Ajouter un médicament</button>
+  
+    <div mat-dialog-actions align="end">
+      <button mat-button type="button" (click)="onCancel()">Annuler</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="addPrescriptionForm.invalid">
+        Ajouter
+      </button>
+    </div>
+    
+  </form>
+  
   </mat-card>
   

@@ -20,7 +20,6 @@
                 {{ patient.nom }} {{ patient.prenom }}
               </td>
             </ng-container>
-    
             <!-- Colonne Téléphone -->
             <ng-container matColumnDef="tel">
               <th mat-header-cell *matHeaderCellDef> Téléphone </th>
@@ -28,7 +27,6 @@
                 {{ patient.tel }}
               </td>
             </ng-container>
-    
             <!-- Colonne Code Patient -->
             <ng-container matColumnDef="codePatient">
               <th mat-header-cell *matHeaderCellDef> Code Patient </th>
@@ -36,7 +34,6 @@
                 {{ patient.codePatient }}
               </td>
             </ng-container>
-    
             <!-- Colonne CIN -->
             <ng-container matColumnDef="cin">
               <th mat-header-cell *matHeaderCellDef> CIN </th>
@@ -44,7 +41,6 @@
                 {{ patient.cin }}
               </td>
             </ng-container>
-    
             <!-- Colonne Status -->
             <ng-container matColumnDef="status">
               <th mat-header-cell *matHeaderCellDef> Status </th>
@@ -59,7 +55,6 @@
                 </mat-icon>
               </td>
             </ng-container>
-    
             <!-- Header and Rows -->
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

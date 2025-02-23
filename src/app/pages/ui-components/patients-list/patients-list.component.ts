@@ -11,9 +11,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon'; // Add this import
 import { CommonModule } from '@angular/common';
 
-
-
-
 @Component({
   selector: 'app-patients-list',
   standalone: true,
@@ -52,6 +49,7 @@ export class PatientsListComponent implements OnInit {
   private loadPatients(): void {
     this.patientService.getPatients().subscribe({
       next: (data: Patient[]) => {
+        console.log('Réponse brute des patients :', data);
         this.dataSource.data = data; // Assign data to the data source
         this.dataSource.paginator = this.paginator; // Bind the paginator
       },

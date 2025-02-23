@@ -4,7 +4,7 @@ import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } fr
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatOption, MatSelectModule } from '@angular/material/select';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatInputModule } from '@angular/material/input';
@@ -37,13 +37,16 @@ export class AddPrescriptionComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private pharmacienService: PharmacienService,
-    private patientService: PatientService
+    private patientService: PatientService,
+    private dialogRef: MatDialogRef<AddPrescriptionComponent> // ✅ Ajout pour fermer le modal
+
   ) {}
 
   ngOnInit() {
     // Initialisation du formulaire
     this.addPrescriptionForm = this.fb.group({
       codePatient: ['', Validators.required],
+      nom: ['', Validators.required], // ✅ Ajout du champ nom
       description: ['', Validators.required],
       ordonnanceMedicament: this.fb.array([]) // FormArray pour plusieurs médicaments
     });
@@ -66,13 +69,14 @@ export class AddPrescriptionComponent implements OnInit {
     return this.addPrescriptionForm.get('ordonnanceMedicament') as FormArray;
   }
 
-
   // Ajouter un médicament au FormArray
   addMedicament() {
     const medicamentForm = this.fb.group({
       medicamentId: ['', Validators.required],
       posologie: ['', Validators.required],
-      frequence: ['', Validators.required]
+      frequence: ['', Validators.required],
+      message: ['', Validators.required], // ✅ Ajout du message de rappel
+      dateRappel: ['', Validators.required] // ✅ Ajout de la date de rappel
     });
 
     this.ordonnanceMedicament.push(medicamentForm);
@@ -83,17 +87,42 @@ export class AddPrescriptionComponent implements OnInit {
     this.ordonnanceMedicament.removeAt(index);
   }
 
-  // Soumettre le formulaire
   submitPrescription() {
     if (this.addPrescriptionForm.valid) {
-      this.pharmacienService.createOrdonnance(this.addPrescriptionForm.value).subscribe({
+      const formValue = this.addPrescriptionForm.value;
+  
+      // ✅ Construire l'objet à envoyer avec types définis
+      const ordonnance = {
+        nom: "Ordonnance" + new Date().getTime(), // Générer un nom unique
+        description: formValue.description,
+        createdAt: new Date().toISOString(), // Ajouter la date actuelle
+        codePatient: formValue.codePatient,
+        medicaments: formValue.ordonnanceMedicament.map((med: { medicamentId: number; posologie: string; frequence: string }) => ({
+          medicamentId: med.medicamentId,
+          medicamentName: this.medicaments.find(m => m.id === med.medicamentId)?.nom || "Médicament inconnu",
+          posologie: med.posologie,
+          frequence: med.frequence
+        })),
+        rappels: [] // ✅ Ajouter une liste vide pour éviter null
+      };
+  
+      this.pharmacienService.createOrdonnance(ordonnance).subscribe({
         next: (response) => {
-          console.log('Ordonnance créée avec succès', response);
-          this.addPrescriptionForm.reset();
-          this.ordonnanceMedicament.clear();
+          console.log('✅ Ordonnance créée avec succès', response);
+          
+          // Fermer le modal et renvoyer la nouvelle ordonnance
+          this.dialogRef.close(response);
         },
-        error: (err) => console.error('Erreur lors de la création de l’ordonnance', err)
-      });
+        error: (err) => console.error('❌ Erreur lors de la création de l’ordonnance', err)
+      });      
     }
   }
+  
+  
+
+// ✅ Méthode pour fermer le modal sans sauvegarder
+onCancel(): void {
+  this.dialogRef.close(); 
+}
+
 }
