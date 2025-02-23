@@ -36,4 +36,68 @@
       }
     }
   }
+
+  .container {
+    padding: 20px;
+  }
+  
+  .page-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #1976d2;
+  }
+  
+  .card-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .cardWithShadow {
+    width: 90%;
+    max-width: 1200px;
+    padding: 10px;
+    border-radius: 8px;
+  }
+  
+  .theme-card {
+    background: #f8f9fa;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .add-prescription-btn {
+    background-color: #28a745 !important;
+    color: white !important;
+  }
+  
+  .table-responsive {
+    overflow-x: auto;
+  }
+  
+  .medicament-list {
+    padding: 0;
+    list-style-type: none;
+  }
+  
+  .medicament-list li {
+    padding: 5px 0;
+    font-size: 14px;
+  }
+
+  .custom-btn {
+    font-size: 13px;  /* ✅ Texte plus grand */
+    padding: 12px 24px;  /* ✅ Bouton plus large */
+    border-radius: 8px;  /* ✅ Coins arrondis */
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s ease-in-out;  /* ✅ Animation fluide */
+  }
+  
   

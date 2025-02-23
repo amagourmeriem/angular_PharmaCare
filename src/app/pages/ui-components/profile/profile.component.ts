@@ -10,9 +10,9 @@ import { MatCard, MatCardHeader } from '@angular/material/card';
 })
 export class ProfileComponent implements OnInit {
   user: { nom: string; prenom: string; email: string } = {
-    nom: 'Dr. Meriem',
-    prenom: 'AMAGOUR',
-    email: 'Mariemamagour@gmail.com'
+    nom: 'Pharmacie',
+    prenom: 'PharmaCare',
+    email: 'PharmaCare@gmail.com'
   };
 
   constructor() {}

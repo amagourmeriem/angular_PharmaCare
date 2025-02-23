@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
   <form [formGroup]="addPrescriptionForm" (ngSubmit)="submitPrescription()">
     <!-- Patient -->
     <mat-form-field appearance="fill">
@@ -70,7 +70,8 @@
   
     <button mat-button type="button" (click)="addMedicament()">+ Ajouter un médicament</button>
   
-    <div mat-dialog-actions align="end">
+    
+    <div mat-dialog-actions style="display: flex; justify-content: center;">
       <button mat-button type="button" (click)="onCancel()">Annuler</button>
       <button mat-raised-button color="primary" type="submit" [disabled]="addPrescriptionForm.invalid">
         Ajouter

@@ -1,0 +1,19 @@
+.center-fields {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }/* Centrer les champs du formulaire dans la modal */
+mat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  /* Centrer les boutons d'actions */
+  mat-dialog-actions {
+    display: flex;
+    justify-content: center;
+  }

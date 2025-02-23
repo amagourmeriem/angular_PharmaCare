@@ -1,14 +1,13 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { PharmacienService } from 'src/app/services/pharmacien.service';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatCard } from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-add-patient-modal',
@@ -20,13 +19,13 @@ import { MatCard } from '@angular/material/card';
     MatDialogModule,
     ReactiveFormsModule,
     MatButtonModule,
-    MatCard  
+    MatCardModule
   ],
   templateUrl: './add-patient-modal.component.html',
   styleUrls: ['./add-patient-modal.component.scss']
 })
 export class AddPatientModalComponent {
-  @Output() patientAdded: EventEmitter<void> = new EventEmitter<void>(); // Émettre un événement pour informer le parent
+  @Output() patientAdded: EventEmitter<void> = new EventEmitter<void>();
   addPatientForm: FormGroup;
 
   constructor(
@@ -44,28 +43,18 @@ export class AddPatientModalComponent {
 
   onSubmit(): void {
     if (this.addPatientForm.valid) {
-      const patientData = this.addPatientForm.value;
-
-      // Envoi des données au backend
-      this.pharmacienService.createPatient(patientData).subscribe({
-        next: (response: any) => {
-          console.log('Patient ajouté avec succès :', response);
-
-          // Émettre un événement pour informer le parent
+      this.pharmacienService.createPatient(this.addPatientForm.value).subscribe({
+        next: (response) => {
           this.patientAdded.emit();
-
-          // Fermer le modal après l'ajout
-          this.dialogRef.close();
+          this.dialogRef.close(response);
         },
-        
-        error: (err: any) => {
-          console.error('Erreur lors de l’ajout du patient :', err);
-        },        
+        error: (err) => console.error('Erreur lors de l’ajout du patient :', err),
       });
     }
   }
 
   onCancel(): void {
-    this.dialogRef.close(); // Fermer le modal sans action
+    this.dialogRef.close();
   }
 }
+  

@@ -51,3 +51,18 @@ mat-label {
   font-size: 14px;
   color: #555;
 }
+
+/* Centrer les champs du formulaire dans la modal */
+mat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Centrer les boutons d'actions */
+mat-dialog-actions {
+  display: flex;
+  justify-content: center;
+}
