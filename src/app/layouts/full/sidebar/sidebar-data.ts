@@ -38,7 +38,7 @@ export const navItems: NavItem[] = [
     route: '/ui-components/medications',
   },
   {
-    displayName: 'Badge',
+    displayName: 'About',
     iconName: 'award', // Tabler Icon: award (ou rosette si disponible)
     bgcolor: 'accent',
     route: '/ui-components/badge',

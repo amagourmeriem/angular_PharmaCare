@@ -1,43 +1,39 @@
-import { Component, OnInit } from '@angular/core';
-import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableModule } from '@angular/material/table';
+import { PharmacienService } from 'src/app/services/pharmacien.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatCardHeader, MatCardTitle, MatCardContent, MatCard } from '@angular/material/card';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-medication',
+  selector: 'app-medications',
   standalone: true,
-  imports: [MatCard, MatCardHeader, MatCardContent, MatCardTitle],
+  imports: [MatTableModule, MatCardHeader, MatCardTitle, MatCardContent, MatCard],
   templateUrl: './medications.component.html',
   styleUrls: ['./medications.component.scss']
 })
-export class MedicationComponent implements OnInit {
+export class MedicationsComponent implements OnInit {
+  displayedColumns: string[] = ['image', 'nom', 'description'];
+  medications = new MatTableDataSource<any>([]);
 
-  // Liste des colonnes affichées dans le tableau
-  displayedColumns: string[] = ['nomMedicament', 'posologie', 'frequence', 'remarques'];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  // Données fictives pour les médicaments
-  medications = [
-    {
-      nom: 'Paracétamol',
-      posologie: '500 mg',
-      frequence: '3 fois par jour',
-      remarques: 'À prendre après les repas'
-    },
-    {
-      nom: 'Ibuprofène',
-      posologie: '400 mg',
-      frequence: '2 fois par jour',
-      remarques: 'Ne pas dépasser 10 jours de traitement'
-    },
-    {
-      nom: 'Amoxicilline',
-      posologie: '250 mg',
-      frequence: '3 fois par jour',
-      remarques: 'À prendre avec un verre d’eau'
-    }
-  ];
+  constructor(private pharmacienService: PharmacienService) {}
 
-  constructor() { }
+  ngOnInit() {
+    this.loadMedicaments();
+  }
 
-  ngOnInit(): void {
-    // Initialisation si nécessaire
+  loadMedicaments() {
+    this.pharmacienService.getMedicaments().subscribe({
+      next: (data) => {
+        console.log('Médicaments récupérés:', data);
+        this.medications.data = data;
+        this.medications.paginator = this.paginator;
+      },
+      error: (err) => {
+        console.error('Erreur lors de la récupération des médicaments', err);
+      }
+    });
   }
 }

@@ -1,8 +1,6 @@
 <div class="container">
-    <!-- Titre principal -->
     <h1 class="page-title">Liste des Médicaments</h1>
 
-    <!-- Carte principale -->
     <mat-card class="cardWithShadow theme-card">
         <mat-card-header>
             <mat-card-title class="m-b-0">Médicaments</mat-card-title>
@@ -10,44 +8,36 @@
 
         <mat-card-content class="b-t-1">
             <div class="table-responsive">
-                <!-- Tableau des médicaments -->
-                <table mat-table class="mat-elevation-z8">
-                    <!-- Colonne Nom du Médicament -->
-                    <ng-container matColumnDef="nomMedicament">
-                        <th mat-header-cell *matHeaderCellDef> Nom du Médicament </th>
+                <table mat-table [dataSource]="medications" class="mat-elevation-z8">
+                    
+                    <!-- Colonne Image -->
+                    <ng-container matColumnDef="image">
+                        <th mat-header-cell *matHeaderCellDef class="black-header"> Image </th>
                         <td mat-cell *matCellDef="let medicament">
-                            {{ medicament.nom }}
+                            <img [src]="medicament.imageUrl ? medicament.imageUrl : 'assets/default-medicine.jpg'" 
+     alt="Image médicament" class="medicament-image"/>
+
                         </td>
                     </ng-container>
 
-                    <!-- Colonne Posologie -->
-                    <ng-container matColumnDef="posologie">
-                        <th mat-header-cell *matHeaderCellDef> Posologie </th>
-                        <td mat-cell *matCellDef="let medicament">
-                            {{ medicament.posologie }}
-                        </td>
+                    <!-- Colonne Nom -->
+                    <ng-container matColumnDef="nom">
+                        <th mat-header-cell *matHeaderCellDef class="black-header"> Name </th>
+                        <td mat-cell *matCellDef="let medicament"> {{ medicament.nom }} </td>
                     </ng-container>
 
-                    <!-- Colonne Fréquence -->
-                    <ng-container matColumnDef="frequence">
-                        <th mat-header-cell *matHeaderCellDef> Fréquence </th>
-                        <td mat-cell *matCellDef="let medicament">
-                            {{ medicament.frequence }}
-                        </td>
+                    <!-- Colonne Description -->
+                    <ng-container matColumnDef="description">
+                        <th mat-header-cell *matHeaderCellDef class="black-header"> Description </th>
+                        <td mat-cell *matCellDef="let medicament"> {{ medicament.description }} </td>
                     </ng-container>
 
-                    <!-- Colonne Remarques -->
-                    <ng-container matColumnDef="remarques">
-                        <th mat-header-cell *matHeaderCellDef> Remarques </th>
-                        <td mat-cell *matCellDef="let medicament">
-                            {{ medicament.remarques }}
-                        </td>
-                    </ng-container>
-
-                    <!-- Lignes et cellules -->
+                    <!-- Définition des lignes -->
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
+
+                <!-- Paginator -->
             </div>
         </mat-card-content>
     </mat-card>

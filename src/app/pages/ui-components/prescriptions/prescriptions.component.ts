@@ -1,55 +1,49 @@
-import { Component } from '@angular/core';
-import {TooltipPosition, MatTooltipModule} from '@angular/material/tooltip';
-import { MatCardModule } from '@angular/material/card';
-import { MatInputModule } from '@angular/material/input';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatList, MatListItem } from '@angular/material/list';
-import { CommonModule } from '@angular/common'; // Import CommonModule
-import { MatDivider } from '@angular/material/divider';
-
-
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { PharmacienService } from 'src/app/services/pharmacien.service';
+import { AddPrescriptionComponent } from '../add-prescription/add-prescription.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-prescriptions',
+   standalone: true,
+    imports: [CommonModule],
   templateUrl: './prescriptions.component.html',
   styleUrls: ['./prescriptions.component.scss'],
-  standalone: true,
-  imports: [
-    MatTooltipModule, MatCardModule, MatInputModule, MatCheckboxModule, MatList, MatListItem, CommonModule, MatDivider
-],
+
 })
-export class PrescriptionsComponent {
-  prescriptions = [
-    {
-      id: 1,
-      patientName: 'John Doe',
-      date: new Date(),
-      description: 'Follow-up after surgery',
-      medications: [
-        { name: 'Paracetamol', dosage: '500mg', frequency: 'Twice a day' },
-        { name: 'Ibuprofen', dosage: '200mg', frequency: 'Three times a day' },
-      ],
-    },
-    {
-      id: 2,
-      patientName: 'Jane Smith',
-      date: new Date(),
-      description: 'Treatment for flu',
-      medications: [
-        { name: 'Amoxicillin', dosage: '250mg', frequency: 'Twice a day' },
-      ],
-    },
-  ];
+export class PrescriptionsComponent implements OnInit {
+  ordonnances: any[] = [];
 
-  selectedPrescription: any = null;
+  constructor(private pharmacienService: PharmacienService, public dialog: MatDialog) {}
 
-  // Méthode pour ajouter une nouvelle prescription
-  addPrescription() {
-    alert('Add Prescription functionality to be implemented!');
+  ngOnInit(): void {
+    this.loadOrdonnances();
   }
 
-  // Méthode pour sélectionner une prescription
-  selectPrescription(prescription: any) {
-    this.selectedPrescription = prescription;
+  // ✅ Charger les ordonnances existantes
+  loadOrdonnances() {
+    this.pharmacienService.getOrdonnances().subscribe(
+      (data) => {
+        this.ordonnances = data;
+      },
+      (error) => {
+        console.error('Erreur lors de la récupération des ordonnances', error);
+      }
+    );
+  }
+
+  // ✅ Ouvrir le modal pour ajouter une ordonnance
+  openAddPrescriptionDialog() {
+    const dialogRef = this.dialog.open(AddPrescriptionComponent, {
+      width: '500px',
+    });
+
+    // Rafraîchir la liste après fermeture du modal
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'refresh') {
+        this.loadOrdonnances();
+      }
+    });
   }
 }

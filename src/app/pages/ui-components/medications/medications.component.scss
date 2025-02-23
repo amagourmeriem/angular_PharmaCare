@@ -60,3 +60,13 @@
     background-color: #f1f1f1;
   }
   
+  .black-header {
+    color: black !important;
+    font-weight: bold;
+}
+.medicament-image {
+  width: 150px;  /* Largeur réduite */
+  height: 150px; /* Hauteur réduite */
+  object-fit: cover; /* Garde l'aspect proportionnel */
+  border-radius: 5px; /* Coins arrondis pour un meilleur rendu */
+}

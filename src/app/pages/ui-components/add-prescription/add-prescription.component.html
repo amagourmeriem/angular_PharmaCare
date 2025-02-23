@@ -1,0 +1,49 @@
+<mat-card>
+    <form [formGroup]="addPrescriptionForm" (ngSubmit)="submitPrescription()">
+      <!-- Sélection du patient -->
+      <mat-form-field>
+        <mat-label>Choisir un patient</mat-label>
+        <mat-select formControlName="codePatient">
+          <mat-option *ngFor="let patient of patients" [value]="patient.codePatient">
+            {{ patient.nom }} {{ patient.prenom }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+  
+      <!-- Description -->
+      <mat-form-field>
+        <mat-label>Description</mat-label>
+        <input matInput formControlName="description" required />
+      </mat-form-field>
+  
+      <!-- Liste des médicaments -->
+      <div formArrayName="ordonnanceMedicament">
+        <div *ngFor="let medicamentCtrl of ordonnanceMedicament.controls; let i = index;" [formGroupName]="i">
+          <mat-form-field>
+            <mat-label>Choisir un médicament</mat-label>
+            <mat-select formControlName="medicamentId">
+              <mat-option *ngFor="let medicament of medicaments" [value]="medicament.id">
+                {{ medicament.nom }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <mat-form-field>
+            <mat-label>Posologie</mat-label>
+            <input matInput formControlName="posologie" required />
+          </mat-form-field>
+  
+          <mat-form-field>
+            <mat-label>Fréquence</mat-label>
+            <input matInput formControlName="frequence" required />
+          </mat-form-field>
+  
+          <button mat-button color="warn" (click)="removeMedicament(i)">Supprimer</button>
+        </div>
+      </div>
+  
+      <button mat-button color="primary" (click)="addMedicament()">Ajouter un médicament</button>
+      <button mat-raised-button color="accent" type="submit" [disabled]="addPrescriptionForm.invalid">Enregistrer</button>
+    </form>
+  </mat-card>
+  

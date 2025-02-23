@@ -9,7 +9,7 @@ import { AppTooltipsComponent } from './tooltips/tooltips.component';
 import { AppFormsComponent } from './forms/forms.component';
 import { PatientsListComponent } from './patients-list/patients-list.component'; // Import du nouveau composant
 import { PrescriptionsComponent } from './prescriptions/prescriptions.component';
-import { MedicationComponent } from './medications/medications.component';
+import { MedicationsComponent } from './medications/medications.component';
 import { ProfileComponent } from './profile/profile.component';
 
 export const UiComponentsRoutes: Routes = [
@@ -50,7 +50,7 @@ export const UiComponentsRoutes: Routes = [
       },
       {
         path: 'medications',
-        component: MedicationComponent, // Lien vers le composant Medications
+        component: MedicationsComponent, // Lien vers le composant Medications
       },
       {
         path: 'profile',

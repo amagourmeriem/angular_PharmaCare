@@ -47,3 +47,27 @@
     border-radius: 8px;
   }
   
+  mat-paginator {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .status-active {
+    color: green;  // Green for active status
+  }
+  
+  .status-inactive {
+    color: red;  // Red for inactive status
+  }
+  .header-container {
+    display: flex;
+    justify-content: space-around; /* Distribute space between title and button */
+    align-items: center; /* Align items vertically in the center */
+    width: 100%;
+  }
+  
+  .add-patient-btn {
+    margin-left: auto; /* Ensures the button stays on the far right */
+  }
+    

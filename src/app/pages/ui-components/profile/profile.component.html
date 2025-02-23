@@ -1,16 +1,15 @@
-<mat-card>
-    <mat-card-header>
-        <div class="profile-header">
-          <!-- Image de l'utilisateur -->
-          <div class="profile-image">
-            <img src="assets/images/profile/user-1.jpg" alt="User Avatar" />
-          </div>
-          <!-- Nom, prénom et email -->
-          <div class="profile-details">
-            <h2 class="profile-name">{{ user.nom }} {{ user.prenom }}</h2>
-            <p class="profile-email">{{ user.email }}</p>
-          </div>
-        </div>
-      </mat-card-header>
-    </mat-card>
-    
+<mat-card class="profile-card">
+  <mat-card-header>
+    <div class="profile-header">
+      <!-- Image de l'utilisateur -->
+      <div class="profile-image">
+        <img src="assets/images/profile/user-1.jpg" alt="User Avatar" />
+      </div>
+      <!-- Nom, prénom et email -->
+      <div class="profile-details">
+        <h2 class="profile-name">{{ user.nom }} {{ user.prenom }}</h2>
+        <p class="profile-email">{{ user.email }}</p>
+      </div>
+    </div>
+  </mat-card-header>
+</mat-card>
